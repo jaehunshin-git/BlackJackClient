@@ -34,7 +34,7 @@ class BlackJackClient {
                 switch (choice) {
                     case 1:
                         newcard = getCard(in);
-                        System.out.println("new card is "+newcard);
+//                        System.out.println("new card is "+newcard);
                         card += newcard;    // 카드의 합을 계속 더해준다.
 
                         if (card > 21) {
@@ -106,6 +106,23 @@ class BlackJackClient {
             msg = in.readLine();    // Client 가 Server 에 접속하면 여기서 기다리고있다.
         } catch (IOException e) { }
         int newcard = Integer.parseInt(msg);    // Server 가 넘겨준 카드를 int 형으로 바꾸고 그 카드를 반환한다.
+
+        if (newcard == 11) {
+            System.out.println("new card is Jack"); // 해당 Client 가 getCard() method 로 카드를 뽑으면 Server Console 에 출력한다.
+            newcard = 10;
+        }
+        else if (newcard == 12) {
+            System.out.println("new card is Queen"); // 해당 Client 가 getCard() method 로 카드를 뽑으면 Server Console 에 출력한다.
+            newcard = 10;
+        }
+        else if (newcard == 13) {
+            System.out.println("new card is King"); // 해당 Client 가 getCard() method 로 카드를 뽑으면 Server Console 에 출력한다.
+            newcard = 10;
+        }
+        else {
+            System.out.println("new card is "+newcard); // 해당 Client 가 getCard() method 로 카드를 뽑으면 Server Console 에 출력한다.
+        }
+
         return newcard;
     }
 
