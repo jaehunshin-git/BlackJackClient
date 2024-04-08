@@ -10,7 +10,7 @@ import java.util.*;
 
 class BlackJackClient {
     static int inPort = 9999;
-    static String address ="localhost";
+    static String address ="192.168.0.91";
     static public PrintWriter out;
     static public BufferedReader in;
     static int card=0;
@@ -22,7 +22,9 @@ class BlackJackClient {
 
         try (Socket socket = new Socket(address, inPort)) {
             out = new PrintWriter(socket.getOutputStream(), true);
+            //
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            // in 은 c 가 가지고 있는 서버의 출력을 읽는 객체
 
             card += getCard(in);
             while (choice != 3) {
@@ -33,7 +35,7 @@ class BlackJackClient {
                     case 1:
                         newcard = getCard(in);
                         System.out.println("new card is "+newcard);
-                        card += newcard;
+                        card += newcard;    // 카드의 합을 계속 더해준다.
 
                         if (card > 21) {
                             System.out.println(card+", Over 21! \n\n");
@@ -82,7 +84,7 @@ class BlackJackClient {
         System.out.print("Choose an option: ");
 
         Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
+        int choice = sc.nextInt();  // Client가 Server에 접속하면 여기서 기다린다.
 
         while ((choice < 1) || (choice > 3)) {
             System.out.println("Invalid input!");
@@ -101,9 +103,9 @@ class BlackJackClient {
     public static int getCard(BufferedReader in) {
         String msg="";
         try {
-            msg = in.readLine();
+            msg = in.readLine();    // Client 가 Server 에 접속하면 여기서 기다리고있다.
         } catch (IOException e) { }
-        int newcard = Integer.parseInt(msg);
+        int newcard = Integer.parseInt(msg);    // Server 가 넘겨준 카드를 int 형으로 바꾸고 그 카드를 반환한다.
         return newcard;
     }
 
