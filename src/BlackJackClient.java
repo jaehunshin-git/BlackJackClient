@@ -10,10 +10,12 @@ import java.util.*;
 
 class BlackJackClient {
     static int inPort = 9999;
-    static String address ="192.168.0.91";
+//    static String address ="192.168.0.91";
+    static String address ="192.168.65.110";
     static public PrintWriter out;
     static public BufferedReader in;
-    static int card=0;
+    static int card = 0;
+    static boolean haveAce = false;
 
 
     public static void main(String[] args) {
@@ -34,7 +36,6 @@ class BlackJackClient {
                 switch (choice) {
                     case 1:
                         newcard = getCard(in);
-//                        System.out.println("new card is "+newcard);
                         card += newcard;    // 카드의 합을 계속 더해준다.
 
                         if (card > 21) {
@@ -107,7 +108,11 @@ class BlackJackClient {
         } catch (IOException e) { }
         int newcard = Integer.parseInt(msg);    // Server 가 넘겨준 카드를 int 형으로 바꾸고 그 카드를 반환한다.
 
-        if (newcard == 11) {
+        if (newcard == 1) {
+            System.out.println("new card is Ace"); // 해당 Client 가 getCard() method 로 카드를 뽑으면 Server Console 에 출력한다.
+            haveAce = true;
+        }
+        else if (newcard == 11) {
             System.out.println("new card is Jack"); // 해당 Client 가 getCard() method 로 카드를 뽑으면 Server Console 에 출력한다.
             newcard = 10;
         }
